@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="./css/sm.min.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/clearall.css" />
+  </head>
+  <body>
+    <div id="app">
+      <todo-header></todo-header>
+      <!-- 父组件传值给子组件 -->
+      <todo-middle :date="date" @accomplish="accomplish" @checkbool='checkbool' :end='endArr'></todo-middle>
+      <todo-bottom :boarr="date" @end = 'end'></todo-bottom>
+      <!-- 传值给父组件 -->
+      <todo-display @show="abc"></todo-display>
+    </div>
+    <!-- 头部 -->
+    <template id="todu-header">
+      <header class="bar bar-nav">
+        <a class="icon icon-friends pull-left"></a>
+        <a class="icon icon-edit pull-right" @click="clickHandler"></a>
+        <h1 class="title">标题</h1>
+      </header>
+    </template>
+    <!-- 中间 -->
+    <template id="todu-middle">
+      <div class="content">
+        <div class="card" v-for="(item, index) of end" :key="item.id">
+          <input
+            type="checkbox"
+            :value="item.id"
+            v-model="bool"
+            @click="checkboxHandler($event)"
+          />
+          <div class="card-content">
+            <div class="card-content-inner">{{item.text}}</div>
+          </div>
+          <div class="middle-remove" @click="deleteHandler(item.id)">×</div>
+        </div>
+      </div>
+    </template>
+    <!-- 尾部 -->
+    <template id="todu-bottom">
+      <div class="bottom">
+        <ul class="bottom-list">
+          <li
+            v-for="item in typeArr"
+            @click="typeHandler(item)"
+            class="bm"
+            :class="[item.style,cssStyle==item.style?'bg':'']"
+          >
+            {{item.type}}
+          </li>
+        </ul>
+      </div>
+    </template>
+    <!-- 弹出框 -->
+    <template id="todu-display">
+      <div class="display-mask" v-show="bool">
+        <div class="display-box">
+          <p>
+            <label>内容：</label>
+            <input type="text" placeholder="请输入内容" v-model="text" />
+          </p>
+          <div class="btn">
+            <button @click="determineHandler">确定</button>
+            <button @click="removeHandler">取消</button>
+          </div>
+        </div>
+      </div>
+    </template>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
