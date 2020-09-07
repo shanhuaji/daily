@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+       
+        <div v-if='true'>出错了</div>
+        <Hello v-else></Hello>
+    </div>
+    <template id="hello">
+        <div>
+            hello组件
+        </div>
+    </template>
+    <!-- <template id="two">
+        <div>
+            <p>{{type}}</p>
+        </div>
+    </template> -->
+    <script>
+        /* Vue.component('Two', {
+            template:"#two",
+            data() {
+                return {
+                    type:"你猜"
+                }
+            },
+        }) */
+        Vue.component("Hello", {
+            template:"#hello",
+           
+            mounted() {
+                throw new Error("报错")
+            },
+        })
+        let vm = new Vue({
+            el:"#app",
+            data:{
+                bool:false
+            },
+           methods: {
+               clickHandler(){
+                   
+               }
+           },
+            errorCaptured: (err, vm, info) => {
+                if(err){
+                    /* this.bool = true */
+                    console.log(this.bool);
+                }
+                console.log('err',err);
+                console.log('vm',vm);
+                console.log('info',info);
+            },
+        })
+    </script>
+</body>
+</html>

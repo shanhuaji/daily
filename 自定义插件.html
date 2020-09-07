@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <Hello></Hello>
+      <input type="text" v-focus v-model="timp"/>
+      <p>{{timp|testFilter}}</p>
+    </div>
+    <template id="hello">
+        <div>
+            <button @click="clickHandler">点击</button>
+      </div>
+    </template>
+    <script>
+      let myPlugin = {
+        install(Vue) {
+            Vue.filter('testFilter', (val)=>{
+                return val*2
+            })
+          Vue.directive("focus", {
+            inserted(el) {
+              el.focus();
+            },
+          }),
+            Vue.component("Hello", {
+              template: "#hello",
+              data() {
+                return {};
+              },
+              methods: {
+                clickHandler() {
+                  console.log("11111111");
+                },
+              },
+            });
+        },
+      };
+      Vue.use(myPlugin);
+      let vm = new Vue({
+        el: "#app",
+        data:{
+            timp:111
+        }
+      });
+    </script>
+  </body>
+</html>

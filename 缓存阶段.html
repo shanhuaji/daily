@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click = 'clickHandler'>切换</button>
+        <keep-alive>
+            <component :is="bool?'One':'Two'"></component>
+        </keep-alive>
+    </div>
+    <template id="one">
+        <div>
+            组件one
+        </div>
+    </template>
+    <template id="two">
+        <div>
+            组件two
+        </div>
+    </template>
+    <script>
+         Vue.component('Two', {
+            template:"#two",
+            data() {
+                return {
+                    
+                }
+            },
+        })
+        Vue.component('One', {
+            template:"#one",
+            data() {
+                return {
+                    
+                }
+            },
+            activated() {
+                console.log('activated');
+            },
+            deactivated() {
+                console.log('deactivated');
+            },
+        })
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                bool:true
+            },
+          
+            methods: {
+                clickHandler(){
+                    this.bool = !this.bool
+                }
+            },
+        })
+    </script>
+</body>
+</html>

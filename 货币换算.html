@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+        <input type="text" v-model='money'>
+        <select name="" id="" v-model = 'key'>
+            <option value="RMB">天朝货币</option>
+            <option value="JPY">小日本</option>
+            <option value="USD">美帝国主义</option>
+            <option value="KWD">科威特第纳尔</option>
+        </select>
+        <p>{{money|moneyFilter(key)}}</p>
+    </div>
+    <script>
+      Vue.filter("moneyFilter", (val,key)=>{
+          switch (key) {
+              case 'RMB':
+                  return val*1
+                  break;
+              case 'JPY':
+                  return val*15.5606
+                  break;
+              case 'USD':
+                  return val*0.1464
+                  break;
+              case 'KWD':
+                  return val*0.04475
+                  break;
+          }
+      })
+      let vm = new Vue({
+        el: "#app",
+        data:{
+            key:"RMB",
+            money:100
+        }
+      });
+    </script>
+  </body>
+</html>

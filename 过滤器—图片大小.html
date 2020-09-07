@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="(item, index) in arr" :key="item.id">
+          <img :src="item.img|imgFilter" alt="" />
+          <p>{{item.nm}}</p>
+        </li>
+      </ul>
+    </div>
+    <script>
+      Vue.filter("imgFilter", (val) => {
+        if (navigator.userAgent.indexOf("iPhone") != -1) {
+          return val.replace("w.h", "128.180");
+        }
+        if (navigator.userAgent.indexOf("iPad") != -1) {
+          return val.replace("w.h", "130.190");
+        }
+        if (navigator.userAgent.indexOf("Windows ") != -1) {
+          return val.replace("w.h", "160.220");
+        }
+      });
+      let vm = new Vue({
+        el: "#app",
+        data: {
+          arr: [],
+        },
+        mounted() {
+          fetch("./test.json")
+            .then((res) => res.json())
+            .then((date) => {
+              this.arr = date;
+            });
+        },
+      });
+
+      
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <Hello></Hello>
+    </div>
+    <template id="hello">
+        <div class="hello">
+            <button @click='clickHandler'>自我销毁</button>
+            <p>{{type}}</p>
+        </div>
+    </template>
+    <script>
+        Vue.component('Hello', {
+            template:"#hello",
+            data() {
+                return {
+                    type:"Hello组件"
+                }
+            },
+            methods:{
+                clickHandler(){
+                    console.log(111);
+                    this.$destroy()
+                }
+            },
+            mounted() {
+                
+            },
+            destroyed() {
+               document.querySelector(".hello").remove()
+            },
+        })
+        let vm = new Vue({
+            el:"#app",
+            data:{},
+            methods: {
+                
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{time|timeFiler('--')}}</p>
+      <Hello></Hello>
+    </div>
+    <template id="hello">
+        <div>
+            <p>{{n|timeFiler('/')}}</p>
+        </div>
+    </template>
+    <script>
+        Vue.component('Hello', {
+            template:"#hello",
+            data() {
+                return {
+                    n:Date.now()
+                }
+            },
+        })
+      Vue.filter("timeFiler", (val, type) => {
+        let d = new Date(val);
+        let num =
+          d.getFullYear() +
+          type +
+          (d.getMonth() + 1) +
+          type +
+          d.getDate() +
+          type +
+          d.getHours() +
+          type +
+          d.getMinutes() +
+          type +
+          d.getSeconds();
+        return num;
+      });
+      let vm = new Vue({
+        el: "#app",
+        data: {
+          time: Date.now(),
+        },
+      });
+    </script>
+  </body>
+</html>
